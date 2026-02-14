@@ -19,10 +19,45 @@ export async function GET() {
     }
 
     if (!connected) {
-      return NextResponse.json(
-        { error: 'Redis not connected', connected: false },
-        { status: 503 }
-      );
+      // Return demo data for Vercel preview
+      return NextResponse.json({
+        connected: false,
+        demo: true,
+        timestamp: Date.now(),
+        rateLimit: {
+          totalKeys: 3,
+          topConsumers: [
+            { ip: '192.168.1.1', requests: 42 },
+            { ip: '10.0.0.5', requests: 23 },
+            { ip: '192.168.1.3', requests: 17 },
+          ],
+          blockedRequests: 2,
+          requestsPerMinute: 47,
+        },
+        cache: {
+          hits: 142,
+          misses: 38,
+          total: 180,
+          hitRatio: 79.4,
+          cachedKeys: 25,
+        },
+        activity: Array.from({ length: 10 }, (_, i) => ({
+          id: `demo-${i}`,
+          timestamp: Date.now() - i * 10000,
+          type: i % 3 === 0 ? 'rate_limited' : i % 2 === 0 ? 'cache_hit' : 'cache_miss',
+          ip: `192.168.1.${(i % 5) + 1}`,
+          prompt: `Sample prompt ${i + 1}`,
+          cached: i % 3 !== 0,
+          blocked: i % 3 === 0,
+        })),
+        keyDistribution: {
+          rateLimit: 3,
+          cache: 25,
+          stats: 4,
+          activity: 1,
+        },
+        totalKeys: 33,
+      });
     }
 
     // Fetch all stats in parallel

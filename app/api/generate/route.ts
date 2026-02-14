@@ -30,6 +30,33 @@ export async function POST(request: NextRequest) {
                request.headers.get('x-real-ip') || 
                'unknown';
 
+    let connected = true;
+    try {
+      await getRedisClient().ping();
+    } catch {
+      connected = false;
+    }
+
+    if (!connected) {
+      // Demo mode: simulate rate limiting and caching without Redis
+      const demoResponses: Record<string, string> = {
+        'What is the meaning of life?': '42. But seriously, meaning is subjective—find what resonates with you.',
+        'Explain quantum computing': 'Quantum computing uses qubits that can exist in superposition, enabling parallel computation on massive scales.',
+        'Write a haiku about code': 'Bugs appear at dusk / The keyboard clacks through the night / Coffee fuels the dawn.',
+      };
+      const response = demoResponses[prompt] || `Demo response to: "${prompt}" (connect Redis for full functionality)`;
+      const isCacheHit = Object.keys(demoResponses).some((k) => demoResponses[k] === response);
+      return NextResponse.json({
+        response,
+        cached: isCacheHit,
+        rateLimit: {
+          remaining: Math.floor(Math.random() * 10),
+          resetAt: Date.now() + 30000,
+        },
+        demo: true,
+      });
+    }
+
     // Check rate limit (10 requests per minute)
     const rateLimit = await checkRateLimit(ip, 10, 60000);
 
