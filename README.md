@@ -4,6 +4,12 @@ A production-grade demonstration of advanced Valkey (Redis-compatible) patterns 
 
 **Built by Matt Whitney as part of BetterDB founding engineer application**
 
+## 📚 Quick Links
+
+- **[Deployment Guide](./DEPLOYMENT.md)** — Step-by-step Vercel + Upstash setup
+- **[Testing Guide](./TESTING.md)** — Local and production testing procedures
+- **[Project Summary](./PROJECT_SUMMARY.md)** — Complete feature overview and technical details
+
 ## 🎯 Features
 
 ### 1. Sliding Window Rate Limiting
