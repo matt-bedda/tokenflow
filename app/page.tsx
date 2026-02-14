@@ -8,6 +8,7 @@ import {
 
 interface Stats {
   connected: boolean;
+  demo?: boolean;
   timestamp: number;
   rateLimit: {
     totalKeys: number;
@@ -237,6 +238,27 @@ XREVRANGE activity:stream + - COUNT 20`,
       </header>
 
       <main className="mx-auto max-w-7xl px-6 py-8 space-y-8">
+        {/* Intro */}
+        <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-6">
+          <p className="text-sm text-slate-300 leading-relaxed">
+            <span className="font-semibold text-white">TokenFlow</span> demonstrates production Valkey patterns:
+            sliding window rate limiting via sorted sets, semantic response caching with SHA-256 keys,
+            and real-time activity logging via Streams. Connect a Valkey instance to see it live,
+            or explore the demo data below.{' '}
+            <button
+              onClick={() => setExpandedSection(expandedSection === 'rateLimit' ? null : 'rateLimit')}
+              className="text-blue-400 hover:underline"
+            >
+              See the commands ↓
+            </button>
+          </p>
+          {stats.demo && (
+            <p className="mt-2 text-xs text-slate-500">
+              🟡 Running in demo mode — no Valkey instance connected. Set <code className="text-slate-400">REDIS_URL</code> to enable live data.
+            </p>
+          )}
+        </div>
+
         {/* Stat Cards */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           <StatCard label="Requests / min" value={stats.rateLimit.requestsPerMinute} color="blue" />
