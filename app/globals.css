@@ -1,20 +1,13 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@layer base {
-  * {
-    border-color: rgb(30 41 59);
-  }
-  
-  body {
-    @apply bg-slate-950 text-slate-100;
-  }
+body {
+  background: #0a0a0a;
+  color: #e5e5e5;
 }
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+::selection {
+  background: #6366f1;
+  color: white;
 }
