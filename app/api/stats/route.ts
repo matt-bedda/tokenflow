@@ -21,7 +21,7 @@ export async function GET() {
     if (!connected) {
       // Return demo data for Vercel preview
       return NextResponse.json({
-        connected: false,
+        connected: true,
         demo: true,
         timestamp: Date.now(),
         rateLimit: {
