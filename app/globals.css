@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    border-color: rgb(30 41 59);
+  }
+  
+  body {
+    @apply bg-slate-950 text-slate-100;
+  }
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
