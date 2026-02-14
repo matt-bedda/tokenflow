@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getRedisClient } from '@/lib/redis';
 import { checkRateLimit } from '@/lib/rate-limiter';
 import { getCachedResponse, setCachedResponse } from '@/lib/cache';
 import { addActivityEvent } from '@/lib/activity-stream';
